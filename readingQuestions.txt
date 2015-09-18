@@ -1,0 +1,122 @@
+Chapter 1 - ThinkOS
+
+1) Give an example of a feature common in interpreted languages that is rare in compiled languages.
+
+In an interpreted language, code is translated into "something else" which an interpreter executes. In addition to that, interpreted languages don’t “have” memory allocation.
+
+2) Name two advantages of static typing over dynamic typing.
+
+"Static" refers to thing that happen in compile time. Advantages:
+	a. check that the arguments provided are of the "right" type
+	b. checking happens before the program starts executing, so errors can be found quicker
+	d. declaring types at compile time saves space
+
+3) Give an example of a static semantic error.
+
+Error you don’t consider to be “wrong” - i.e. for variable: int foo  - semantic error if you expect to add to it and instead you perform the following: x-=1
+
+4) What are two reasons you might want to turn off code optimization?
+
+Optimization can make a bug disappear or appear. Also, optimization is a slow process and many debuggers don't work right with optimization "on".
+
+5) When you run gcc with -S, why might the results look different on different computers?
+
+"-s" outputs assembly code and it depends on what processor you have (i386, amd).
+
+6) If you spell a variable name wrong, or if you spell a function name wrong, the error messages you get might look very different.  Why?
+
+Case of function: undefined reference to "foo()"
+Case of variable: Error: variable "x" undeclared 
+
+7) What is a segmentation fault?
+
+Error caused by accessing memory that “does not belong to you". Defining a string literal as a constant and trying to change it will result in a segmentation fault. You can't write a portion of memory that is read-only.
+
+
+
+Chapter 2 - ThinkOS
+
+
+1) Give a real-world example of virtualization (ideally not one of the ones in the book).
+
+Examples include: button to turn on the light, clocks, VDC’s, vApps and VM’s on a server
+
+2) What is the difference between a program and a process?
+
+A process is a software object that represents a running program. More precisely, a process is a software object that provides isolation, whereas a program is a series of steps/coded instructions.
+
+3) What is the primary purpose of the process abstraction?  What illusion does the process abstraction create?
+
+Abstraction provides you with the usefulness of not focusing on the implementation details of a process.
+
+4) What is the kernel?
+
+A part of the operating system responsible for core capabilities like creating threads. 
+
+5) What is a daemon?
+
+For processes that run in the background and provide operating system services. For example, to run mongoDB locally you invoke and run the mongod deamon.
+
+Chapter 3 - ThinkOS
+
+
+1) The Georgian alphabet has 33 letters.  How many bit are needed to specify a letter.
+
+6 bits. Since 2^5=32<33.
+
+2) In the UTF-16 character encoding, the binary representation of a character can take up to 32 bits.  Ignoring the details of the encoding scheme, how many different characters can be represented?
+
+2^32.
+
+3) What is the difference between "memory" and "storage" as defined in Think OS?
+
+Memory is temporary and “volatile”, whereas storage is permanent.
+
+4) What is the difference between a GiB and a GB?  What is the percentage difference in their sizes?
+
+GiB stands for gibibyte = 2^30 GB stands for gigabyte = 10^9. 
+
+5) How does the virtual memory system help isolate processes from each other?
+
+Two different processes can access the same virtual address. when the process is running the same virtual addresses are mapped to different physical addresses
+
+6) Why do you think the stack and the heap are usually located at opposite ends of the address space?
+
+Better memory allocation. When stack overflows it goes to the heap.
+
+7) What Python data structure would you use to represent a sparse array?
+
+List or dictionary.
+
+8) What is a context switch?
+
+Process of storing and restoring the state (more specifically, the execution context) of a process or thread so that execution can be resumed from the same point at a later time.
+
+Chapter 4 - ThinkOS
+
+1) What abstractions do file systems provide?  Give an example of something that is logically true about files systems but not true of their implementations
+
+Files are byte-based and essentially a “file system” is a mapping from each file’s name to its contents. A file system is a kind of key-value database but we take the abstraction of the file system to be a persistent storage hardware.
+
+2) What information do you imagine is stored in an OpenFileTableEntry?
+
+How much of the file has been read, the actual file name and the extension and the number required when needed to perform random access. Give its position in a population of addressable elements. 
+
+3) What are some of the ways operating systems deal with the relatively slow performance of persistent storage?
+HDD 
+
+4) Suppose your program writes a file and prints a message indicating that it is done writing.  Then a power cut crashes your computer.  After you restore power and reboot the computer, you find that the file you wrote is not there.  What happened?
+
+The operating system just wrote it in memory and didn’t write it to disk. 
+
+5) Can you think of one advantage of a File Allocation Table over a UNIX inode?  Or an advantage of a inode over a FAT?
+
+The inode is where all the metadata of a file is stored: its modification time, its permissions, and so on. It is also where the location of the file data on the disk is stored. This data has to be stored somewhere.Storing the inode data inside the directory though carries its own overhead. It makes the directory larger, so that obtaining a directory listing is slower.
+
+6) What is overhead?  What is fragmentation?
+
+Overhead is the combination of excess or indirect computation time, memory, bandwidth, or other resources that are required to attain a particular goal. Additionally, the overhead is based on the source code. Fragmentation is a phenomenon in which storage space is used inefficiently, reducing capacity or performance and often both
+
+7) Why is the "everything is a file" principle a good idea?  Why might it be a bad idea?
+
+It is a good idea because we can use the same set of tools, utilities and APIs for a wide range of resources. It can be a bad idea, pertaining to security issues that may arise.
